@@ -44,6 +44,6 @@
 
 # Built Visual Studio Code Extensions
 *.vsix
-/.vscode
 /.vs
 /projects/vs2022/.vs/Tavernlight
+/.vscode

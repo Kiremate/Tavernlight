@@ -69,7 +69,7 @@ function RemovePlayerMemberFromParty(playerId, membername) --  TODO Complexity i
         return false, "Player does not have a party or is not in a party"
     end
     local members = party:getMembers()
-    local removingMember = Player(membername) -- getting the to be removed player reference
+    local removingMember = Player(membername) -- We were calling Player constructor too many times on each iteration so we can call it once
     for key,value in pairs(members) do
         if value == removingMember then -- if the member value matches
         local status, error = pcall(party.removeMember, party, removingMember) -- We can add a pcall here since removeMember could fail
