@@ -71,8 +71,15 @@ function Player:onReportBug(message, position, category)
 end
 
 function Player:onTurn(direction)
-	if hasEventCallback(EVENT_CALLBACK_ONTURN) then
-		return EventCallback(EVENT_CALLBACK_ONTURN, self, direction)
+	if self:getGroup():getAccess() and self:getDirection() == direction then
+		local nextPosition = self:getPosition()
+		nextPosition:getNextPosition(direction)
+		-- Replicate here the shaders so it looks like the player is dashing
+		if self:teleportTo(nextPosition, true) then
+			self:getPosition():sendMagicEffect(CONST_ME_POFF)
+			nextPosition:sendMagicEffect(CONST_ME_TELEPORT)
+		end
+		self:teleportTo(nextPosition, true)
 	end
 	return true
 end
